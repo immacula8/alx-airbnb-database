@@ -43,6 +43,7 @@ INNER JOIN users ON bookings.user_id = users.id;
 SELECT properties.name AS property_name, reviews.rating, reviews.comment
 FROM properties
 LEFT JOIN reviews ON properties.id = reviews.property_id;
+ORDER BY properties.name;
 
 -- FULL OUTER JOIN (MySQL version using UNION)
 SELECT users.name AS user_name, bookings.id AS booking_id, bookings.date
