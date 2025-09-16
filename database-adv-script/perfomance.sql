@@ -1,4 +1,4 @@
--- Step 1: Initial query (get all bookings with user, property, and payment details)
+-- Step 1: Initial query with WHERE filter (retrieves bookings with user, property, and payment details)
 SELECT 
     b.id AS booking_id,
     u.id AS user_id,
@@ -11,7 +11,8 @@ SELECT
 FROM bookings b
 JOIN users u ON b.user_id = u.id
 JOIN properties p ON b.property_id = p.id
-JOIN payments pay ON b.id = pay.booking_id;
+JOIN payments pay ON b.id = pay.booking_id
+WHERE pay.status = 'completed' AND p.location = 'Lagos';
 
 -- Step 2: Analyze performance of the initial query
 EXPLAIN ANALYZE
@@ -27,11 +28,10 @@ SELECT
 FROM bookings b
 JOIN users u ON b.user_id = u.id
 JOIN properties p ON b.property_id = p.id
-JOIN payments pay ON b.id = pay.booking_id;
+JOIN payments pay ON b.id = pay.booking_id
+WHERE pay.status = 'completed' AND p.location = 'Lagos';
 
--- Step 3: Refactor / optimize query
--- If payments are optional, switch to LEFT JOIN to avoid unnecessary filtering
--- Only select the columns you actually need
+-- Step 3: Refactored / optimized query
 EXPLAIN ANALYZE
 SELECT 
     b.id AS booking_id,
@@ -41,4 +41,5 @@ SELECT
 FROM bookings b
 JOIN users u ON b.user_id = u.id
 JOIN properties p ON b.property_id = p.id
-LEFT JOIN payments pay ON b.id = pay.booking_id;
+LEFT JOIN payments pay ON b.id = pay.booking_id
+WHERE p.location = 'Lagos';
