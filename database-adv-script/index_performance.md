@@ -1,15 +1,18 @@
--- Indexes for Users table
-CREATE INDEX idx_users_email ON users(email);
+# Database Indexing
 
--- Indexes for Bookings table
-CREATE INDEX idx_bookings_user_id ON bookings(user_id);
-CREATE INDEX idx_bookings_property_id ON bookings(property_id);
-CREATE INDEX idx_bookings_date ON bookings(date);
+This project includes SQL commands for creating indexes on high-usage columns.
 
--- Indexes for Properties table
-CREATE INDEX idx_properties_location ON properties(location);
+## File
+- **database_index.sql**: contains all the `CREATE INDEX` commands.
 
-EXPLAIN SELECT * 
-FROM bookings 
-WHERE user_id = 5 
-ORDER BY date DESC;
+## Indexed Columns
+- Users: `email`
+- Bookings: `user_id`, `property_id`, `date`
+- Properties: `location`
+
+## Usage
+Run the SQL file in your database:
+
+```bash
+psql -d your_database -f database_index.sql
+
